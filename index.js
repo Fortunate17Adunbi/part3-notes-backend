@@ -6,6 +6,15 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static('dist'))
 
+const requestLogger = (request, response, next) => {
+    console.log('Method:', request.method)
+    console.log('Path:', request.path)
+    console.log('Body:', request.body)
+    console.log('---')
+    next()
+}
+app.use(requestLogger)
+
 let notes = [
     {
         id: "1",
@@ -49,6 +58,7 @@ app.post('/api/notes', (request, response) => {
     const note = {
         content: body.content,
         important: Boolean(body.important) || false,
+        date: new Date(),
         id: generateId()
     }
 
