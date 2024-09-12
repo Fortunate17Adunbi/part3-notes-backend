@@ -1,11 +1,8 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
-
-app.use(express.json())
-app.use(cors())
-app.use(express.static('dist'))
-
+const Note = require('./models/note')
 const requestLogger = (request, response, next) => {
     console.log('Method:', request.method)
     console.log('Path:', request.path)
@@ -13,6 +10,10 @@ const requestLogger = (request, response, next) => {
     console.log('---')
     next()
 }
+
+app.use(express.json())
+app.use(cors())
+app.use(express.static('dist'))
 app.use(requestLogger)
 
 let notes = [
@@ -54,36 +55,42 @@ app.post('/api/notes', (request, response) => {
             error: "content missing"
         })
     }
-
-    const note = {
+    const note = new Note ({
         content: body.content,
-        important: Boolean(body.important) || false,
-        date: new Date(),
-        id: generateId()
-    }
+        important: body.important || true,
+    })
 
-    notes = notes.concat(note)
-    response.json(note)
+    note.save().then(savedNote => {
+        console.log(savedNote)
+        response.json(savedNote)
+    }).catch(error => {
+        console.log(`Could not save note try again: ${error.message}`)
+    })
+    
 })
+
 app.get('/', (request, response) => {
     response.send('<h1>Hello world!</h1>')
 })
-
 app.get('/api/notes', (request, response) => {
-    console.log(notes)
-    response.json(notes)
+    Note.find({}).then(notes => {
+        response.json(notes)
+    }).catch(error => {
+        console.log(`Could not get notes try again: ${error.message}`)
+    })
 })
-
 app.get('/api/notes/:id', (request, response) => {
     const id = request.params.id
-    const note = notes.find(note => note.id === id)
-
-    note ? response.json(note) : response.status(404).end()
+    Note.findById(id).then(note => {
+        response.json(note)
+    }).catch(error => {
+        console.log(`Could not get note try again: ${error.message}`)
+    })
 })
+
 app.delete('/api/notes/:id', (request, response) => {
     const id = request.params.id
     notes = notes.filter(note => note.id !== id)
-    // note ? response.json(note) : response.status(404).end()
     response.status(204).end()
 })
 
@@ -100,7 +107,8 @@ app.put('/api/notes/:id', (request, response) => {
     }
 })
 
-const PORT = process.env.PORT || 3001
+
+const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`server runningon port ${PORT}`)
 })
