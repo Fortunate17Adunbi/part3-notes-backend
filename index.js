@@ -47,6 +47,9 @@ const generateId = () => {
 
     return String(maxId + 1)
 }
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+  }
 
 app.post('/api/notes', (request, response) => {
     const body = request.body
@@ -90,7 +93,7 @@ app.get('/api/notes/:id', (request, response) => {
 })
 
 app.delete('/api/notes/:id', (request, response) => {
-    const id = request.params.id
+    const id = Number(request.params.id)
     notes = notes.filter(note => note.id !== id)
     response.status(204).end()
 })
@@ -108,7 +111,7 @@ app.put('/api/notes/:id', (request, response) => {
     }
 })
 
-
+app.use(unknownEndpoint)
 const PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`server runningon port ${PORT}`)
