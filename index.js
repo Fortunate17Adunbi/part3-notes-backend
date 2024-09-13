@@ -48,8 +48,8 @@ const generateId = () => {
     return String(maxId + 1)
 }
 const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: 'unknown endpoint' })
-  }
+  response.status(404).send({ error: 'unknown endpoint' })
+}
 
 app.post('/api/notes', (request, response) => {
     const body = request.body
