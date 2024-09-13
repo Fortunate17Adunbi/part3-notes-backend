@@ -8,3 +8,15 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3001/api/notes/
+
+###
+PUT https://localhost:3001/api/notes/66e038ad4c67f8f89c5d0b29
+Content-Type: application/json
+
+{
+  "content": "Mongoose makes things easy, edited",
+  "important": "false"
+}
+
+###
+DELETE https://localhost:3001/api/notes/66e1b26f1d15b69d93bc339c HTTP/1.1
