@@ -23,13 +23,16 @@ const api = supertest(app)
 
 beforeEach(async () => {
   await Note.deleteMany({})
-  let noteObject = new Note(helper.initialNotes[0])
-  await noteObject.save()
-  noteObject = new Note(helper.initialNotes[1])
-  await noteObject.save()
+  console.log('cleared')
+
+  const noteObjects = helper.initialNotes.map(note => new Note(note))
+  const promiseArray = noteObjects.map(note => note.save())
+
+  await Promise.all(promiseArray)
 })
 
 test('notes are returned as json', async () => {
+  console.log('entered test')
   await api
     .get('/api/notes')
     .expect(200)
@@ -37,7 +40,7 @@ test('notes are returned as json', async () => {
 })
 
 test('there are two notes', async () => {
-  const response =  await api.get('/api/notes')
+  const response = await api.get('/api/notes')
   // console.log('response', response)
   assert.strictEqual(response.body.length, helper.initialNotes.length)
 })
@@ -77,7 +80,6 @@ test('note without content is not added', async () => {
     .send(newNote)
     .expect(400)
 
-  // const response = await api.get('/api/notes')
   const notesAtEnd = await helper.noteInDb()
 
   assert.strictEqual(notesAtEnd.length, helper.initialNotes.length)
