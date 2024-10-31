@@ -39,6 +39,16 @@ describe('when there is initially some notes saved', () => {
     const content = response.body.map(e => e.content)
     assert(content.includes('HTML is easy'))
   })
+
+  test('a specific note can be viewed', async () => {
+    const noteAtStart = await helper.noteInDb()
+    const noteToView = noteAtStart[0]
+    const result = await api.get(`/api/notes/${noteToView.id}`)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  
+    assert.deepStrictEqual(result.body, noteToView)
+  })
 })
 
 describe('viewing a specific note', () => {
@@ -106,16 +116,7 @@ describe('addition of new note', () => {
 
 })
 
-test('a specific note can be viewed', async () => {
-  const noteAtStart = await helper.noteInDb()
-  const noteToView = noteAtStart[0]
 
-  const result = await api.get(`/api/notes/${noteToView.id}`)
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
-
-  assert.deepStrictEqual(result.body, noteToView)
-})
 
 describe('deletion of a note', () => {
   test('succeeds with status code 204 if id is valid', async () => {
