@@ -46,7 +46,7 @@ describe('when there is initially some notes saved', () => {
     const result = await api.get(`/api/notes/${noteToView.id}`)
       .expect(200)
       .expect('Content-Type', /application\/json/)
-  
+    
     assert.deepStrictEqual(result.body, noteToView)
   })
 })
