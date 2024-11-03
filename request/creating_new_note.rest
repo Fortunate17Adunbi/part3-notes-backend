@@ -2,8 +2,9 @@ POST http://localhost:3001/api/notes/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "content": "Testing from vscode rest client",
-    "important": ""
+  "content": "Populate loads the note object of the referenced id",
+  "important": "",
+  "userId": "67253f0ec4caca3c171581c4"
 }
 
 ###
@@ -19,4 +20,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE https://localhost:3001/api/notes/66e1b26f1d15b69d93bc339c HTTP/1.1
+DELETE https://localhost:3001/api/notes/66e0359fc58ab4571bad836b
