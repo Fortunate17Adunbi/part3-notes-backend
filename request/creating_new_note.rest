@@ -1,10 +1,10 @@
-POST http://localhost:3001/api/notes/ HTTP/1.1
+POST http://localhost:3001/api/notes/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNpcDM2MCIsImlkIjoiNjcyYWFhZjc4ZDYxYTNlNTU1MTkxZWRjIiwiaWF0IjoxNzMwODUwMDcwLCJleHAiOjE3MzA4NTM2NzB9.3M-hMEjuGkA9B8WV99QuPBMULmo6aweKCnoc-4b7OJo
 
 {
-  "content": "Populate loads the note object of the referenced id",
-  "important": "",
-  "userId": "67253f0ec4caca3c171581c4"
+  "content": "Set programming goals",
+  "important": true
 }
 
 ###
