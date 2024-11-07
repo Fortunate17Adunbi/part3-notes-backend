@@ -12,6 +12,17 @@ const initialNotes = [
   }
 ]
 
+const newNote = {
+  content: 'Set programming goals',
+  important: true
+}
+
+const newUser = {
+  username: 'cip360',
+  name: 'cip',
+  password: 'cip450'
+}
+
 const nonExistingId = async () => {
   const note = new Note({ content: 'will delete this soon' })
   await note.save()
@@ -22,16 +33,16 @@ const nonExistingId = async () => {
 
 const noteInDb = async () => {
   const notes = await Note.find({})
-  console.log('notes in helper function',notes)
+  // console.log('notes in helper function',notes)
   return notes.map(note => note.toJSON())
 }
 
 const usersInDb = async () => {
   const users = await User.find({})
-  console.log('users from helper', users)
+  // console.log('users from helper', users)
   return users.map(user => user.toJSON())
 }
 
 module.exports = {
-  initialNotes, nonExistingId, noteInDb, usersInDb
+  initialNotes, nonExistingId, noteInDb, usersInDb, newUser, newNote
 }

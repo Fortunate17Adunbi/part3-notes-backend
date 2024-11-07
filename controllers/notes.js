@@ -34,13 +34,13 @@ notesRouter.post('/', async (request, response) => {
   // console.log('request', request)
 
   const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
-  console.log('Decoded token',decodedToken)
+  // console.log('Decoded token',decodedToken)
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'token invalid' })
   }
   const user = await User.findById(decodedToken.id)
 
-  console.log('user', user)
+  // console.log('user', user)
   if (!body.content) {
     return response.status(400).json({
       error: 'content missing'
