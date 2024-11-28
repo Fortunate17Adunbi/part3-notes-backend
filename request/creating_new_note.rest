@@ -1,9 +1,10 @@
-POST http://localhost:3001/api/notes/ HTTP/1.1
+POST http://localhost:3001/api/notes/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNpcDM2MCIsImlkIjoiNjcyYWFhZjc4ZDYxYTNlNTU1MTkxZWRjIiwiaWF0IjoxNzMwODUwMDcwLCJleHAiOjE3MzA4NTM2NzB9.3M-hMEjuGkA9B8WV99QuPBMULmo6aweKCnoc-4b7OJo
 
 {
-    "content": "Testing from vscode rest client",
-    "important": ""
+  "content": "Set programming goals",
+  "important": true
 }
 
 ###
@@ -19,4 +20,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE https://localhost:3001/api/notes/66e1b26f1d15b69d93bc339c HTTP/1.1
+DELETE https://localhost:3001/api/notes/66e0359fc58ab4571bad836b
